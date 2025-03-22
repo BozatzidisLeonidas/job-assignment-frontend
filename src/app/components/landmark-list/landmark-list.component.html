@@ -1,0 +1,10 @@
+<app-search></app-search>
+
+<div class="w-full min-h-screen flex p-4 dark:bg-gray-900">
+    <div class="grid grid-cols-3 gap-4 w-full mx-auto">
+        <app-landmark-card *ngFor="let landmark of landmarkList | sortByOrderNumber"
+         [landmark]="landmark" 
+            class="flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        </app-landmark-card>
+    </div>
+</div>
