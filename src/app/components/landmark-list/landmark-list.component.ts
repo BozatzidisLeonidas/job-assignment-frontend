@@ -19,6 +19,13 @@ export class LandmarkListComponent {
   landmarkService: LandmarkService = inject(LandmarkService);
 
   constructor() {
-    this.landmarkList = this.landmarkService.getAllLandmarks();
+  }
+
+  async ngOnInit() {
+    try {
+      this.landmarkList = await this.landmarkService.getAllLandmarks();
+    } catch (error) {
+      console.error('Failed to load landmarks:', error);
+    }
   }
 }

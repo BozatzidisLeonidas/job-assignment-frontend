@@ -1,32 +1,37 @@
-<div class="w-full h-screen flex justify-center items-center bg-gray-100 dark:bg-gray-900">
-    <!-- Landmark Card -->
-    <div class="flex items-center max-w-4xl p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300 ease-in-out">
-        <!-- Image Section -->
-        <div class="w-1/2 h-[250px] md:h-[300px] flex align-center justify-center">
-            <img class="object-cover rounded-lg" 
-                [src]="landmark?.photo_thumb" 
-                alt="{{landmark?.title}}"
-                class="cursor-pointer">
-        </div>
-
-        <!-- Text Section -->
-        <div class="w-1/2 flex flex-col items-start justify-center p-6 space-y-4 text-left">
-            <h5 class="text-2xl font-bold text-gray-900 dark:text-white">
-                {{ landmark?.title }}
-            </h5>
-            <p class="font-normal text-gray-700 dark:text-gray-400">
-                {{ landmark?.short_info }}
-            </p>
-            
-            <!-- Description displayed with bold and underline -->
-            <p class="font-normal text-gray-500 dark:text-gray-400">
-                <strong class="underline">Description:</strong> {{ landmark?.description }}
-            </p>
-
-            <!-- URL displayed with bold and underline -->
-            <p class="font-normal text-blue-500 dark:text-blue-300">
-                <strong class="underline">URL:</strong> <a [href]="landmark?.url" target="_blank"> {{ landmark?.url }}</a>
-            </p>
-        </div>
+<div class="w-full h-screen flex justify-center items-center bg-gray-100 dark:bg-gray-900 p-6">
+    <div class="flex items-center w-3/4 min-h-[500px] md:min-h-[1000px] p-12 bg-white dark:bg-gray-800 rounded-lg shadow-xl transition duration-300">
+      
+      <div class="w-1/2 h-[400px] md:h-[500px] flex align-center justify-center">
+        <img 
+          class="object-cover rounded-lg cursor-pointer w-full h-full" 
+          [src]="landmark?.photo_thumb" 
+          alt="{{landmark?.title}}"
+          (click)="openModal(landmark?.photo ?? '')"
+        >
+      </div>
+  
+      <div class="w-1/2 flex flex-col items-start justify-center py-12 px-8 space-y-8 text-left">
+        <h5 class="text-3xl font-bold text-gray-900 dark:text-white">
+          {{ landmark?.title }}
+        </h5>
+        <p class="text-lg font-normal text-gray-700 dark:text-gray-400">
+          {{ landmark?.short_info }}
+        </p>
+        <p class="text-lg font-normal text-gray-500 dark:text-gray-400">
+          <strong class="underline">Description:</strong> {{ landmark?.description }}
+        </p>
+        <p class="text-lg font-normal text-blue-500 dark:text-blue-300">
+          <strong class="underline">URL:</strong> 
+          <a [href]="landmark?.url" target="_blank" class="hover:underline">{{ landmark?.url }}</a>
+        </p>
+      </div>
     </div>
-</div>
+  </div>
+  
+  <!-- Custom Modal Component -->
+<app-modal 
+    [photoUrl]="photoUrl()" 
+    [showModal]="showModal()" 
+    (clickOutside)="closeModal()">
+</app-modal>
+  
