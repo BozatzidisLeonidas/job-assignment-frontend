@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { LandmarkService } from '../../services/landmark.service';
 import { Landmark } from '../../models/landmark/landmark.model';
@@ -6,29 +7,33 @@ import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-landmark-fullpage',
-  imports: [ModalComponent],
+  standalone: true,
+  imports: [ModalComponent, CommonModule],
   templateUrl: './landmark-fullpage.component.html',
-  styleUrl: './landmark-fullpage.component.css',
-  standalone: true
+  styleUrls: ['./landmark-fullpage.component.css'],
 })
 export class LandmarkFullpageComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  landmarkService = inject(LandmarkService);
-  landmark: Landmark | undefined;
-  
-  photoUrl = signal<string>('');  // Signal to track the image URL
-  showModal = signal<boolean>(false);  // Signal to track modal visibility
+  landmarkService: LandmarkService = inject(LandmarkService);
 
-  constructor() {
-  }
+  landmark = signal<Landmark | null>(null);
+  photoUrl = signal<string>('');
+  showModal = signal<boolean>(false);
 
   async ngOnInit() {
     const landmarkOrder = Number(this.route.snapshot.params['order']);
-    try {
-      this.landmark = await this.landmarkService.getLandmarkByOrder(landmarkOrder);
-    } catch (error) {
-      console.error('Error fetching landmark:', error);
-    }
+    this.landmarkService.getLandmarkByOrder(landmarkOrder).subscribe({
+      next: (landmark) => {
+        if (landmark) {
+          this.landmark.set(landmark);
+        } else {
+          console.error('Landmark not found.');
+        }
+      },
+      error: (error) => {
+        console.error('Error fetching landmark:', error);
+      }
+    });
   }
 
   openModal(photo: string): void {
@@ -37,6 +42,6 @@ export class LandmarkFullpageComponent {
   }
 
   closeModal(): void {
-    this.showModal.set(false); // Hide modal
+    this.showModal.set(false);
   }
 }

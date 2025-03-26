@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { Landmark } from '../../models/landmark/landmark.model';
-import { LandmarkFullpageComponent } from '../landmark-fullpage/landmark-fullpage.component';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-landmark-card',
-  imports: [RouterModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './landmark-card.component.html',
   styleUrl: './landmark-card.component.css'
 })

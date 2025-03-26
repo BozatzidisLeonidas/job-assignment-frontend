@@ -3,8 +3,9 @@
         class="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 h-full justify-evenly"
         style="width: 100%;">
         <div class="w-1/2 w-[250px] h-[250px]">
-            <img class="w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg" 
-                [src]="landmark.photo_thumb"
+            <img
+                [ngClass]="{'rotate-90': landmark.title === 'Dubai Frame'}" 
+                class="w-full h-full rounded-l-lg md:rounded-none md:rounded-s-lg " [src]="landmark.photo_thumb"
                 alt="{{landmark.title}}">
         </div>
         <div class="w-1/2 flex flex-col items-center justify-center p-4 text-center">

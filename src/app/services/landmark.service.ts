@@ -1,81 +1,67 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Landmark } from '../models/landmark/landmark.model';
 import { environment } from '../../environment';
+
+interface ApiResponse<T> {
+  success: boolean;
+  data: T;
+  errorMessage?: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class LandmarkService {
 
-  url = `${environment.apiUrl}`;
-  constructor() { }
+  private url = environment.apiUrl;
+  constructor(private http: HttpClient) { }
 
-  async getAllLandmarks(): Promise<Landmark[]> {
-    try {
-      const response = await fetch(`${this.url}/getAllLandmarks`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+  getAllLandmarks(): Observable<Landmark[]> {
+    return this.http.get<ApiResponse<Landmark[]>>(`${this.url}/getAllLandmarks`).pipe(
+      map(response => {
+        if (response.success) {
+          return response.data;
+        } else {
+          throw new Error(response.errorMessage);
         }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return Array.isArray(data) ? data : [];
-
-    } catch (error) {
-      console.error('Error fetching landmarks:', error);
-      return [];
-    }
+      }),
+      catchError(this.handleError)
+    );
   }
 
-  async getLandmarkByOrder(id: number): Promise<Landmark | undefined> {
-    try {
-      const response = await fetch(`${this.url}/getLandmarkByOrder?order=${id}`, { 
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+  getLandmarkByOrder(id: Number): Observable<Landmark | undefined> {
+    return this.http.get<ApiResponse<Landmark>>(`${this.url}/getLandmarkByOrder?order=${id}`).pipe(
+      map(response => {
+        if (response.success) {
+          return response.data;
+        } else {
+          throw new Error(response.errorMessage);
         }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return data ?? undefined;
-
-    } catch (error) {
-      console.error(`Error fetching landmark with order ${id}:`, error);
-      return undefined;
-    }
+      }),
+      catchError(this.handleError)
+    );
   }
 
-  async searchLandmarks(query: string): Promise<{ title: string }[]> {
-    try {
-      const response = await fetch(`${this.url}/searchLandmarks?q=${encodeURIComponent(query)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+  searchLandmarks(searchText: string): Observable<Landmark[]> {
+    return this.http.get<ApiResponse<Landmark[]>>(`${this.url}/searchLandmarks?searchText=${searchText}`).pipe(
+      map(response => {
+        if (response.success) {
+          return response.data;
+        } else {
+          throw new Error(response.errorMessage);
         }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      return Array.isArray(data) ? data : [];
-    } catch (error) {
-      console.error('Error searching landmarks:', error);
-      return [];
-    }
+      }),
+      catchError(this.handleError)
+    );
   }
-  
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('API Error: ', error);
+    return throwError(() => {
+      new Error('Something went wrong');
+    })
+  }
 }
