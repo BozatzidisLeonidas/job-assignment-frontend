@@ -4,11 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { LandmarkService } from '../../services/landmark.service';
 import { Landmark } from '../../models/landmark/landmark.model';
 import { ModalComponent } from '../modal/modal.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-landmark-fullpage',
   standalone: true,
-  imports: [ModalComponent, CommonModule],
+  imports: [ModalComponent, CommonModule, RouterModule],
   templateUrl: './landmark-fullpage.component.html',
   styleUrls: ['./landmark-fullpage.component.css'],
 })

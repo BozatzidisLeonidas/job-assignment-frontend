@@ -2,10 +2,10 @@
 
 <div class="w-full min-h-screen flex p-4 dark:bg-gray-900">
     <div *ngIf="(landmarkList$ | async) as landmarks" class="w-full">
-        <div *ngIf="landmarks.length > 0; else noLandmarks" class="grid gap-4 w-full mx-auto
-                   grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
+        <div *ngIf="landmarks.length > 0; else noLandmarks" 
+                class="grid gap-4 w-full h-full mx-auto grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
             <app-landmark-card *ngFor="let landmark of landmarks | sortByOrderNumber" [landmark]="landmark"
-                class="flex flex-col bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                class="flex flex-col rounded-md shadow-md overflow-hidden">
             </app-landmark-card>
         </div>
     </div>

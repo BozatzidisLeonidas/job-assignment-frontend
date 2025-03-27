@@ -13,7 +13,14 @@ export class ModalComponent {
   @Input() showModal: boolean = false;
   @Output() closeModalEvent = new EventEmitter<void>();
 
+  public showLoader = true;
+
+  onImageLoad() {
+    this.showLoader = false;
+  }
+
   closeModal(): void {
     this.closeModalEvent.emit();
+    this.showLoader = true;
   }
 }

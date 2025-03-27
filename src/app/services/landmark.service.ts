@@ -33,7 +33,7 @@ export class LandmarkService {
   }
 
   getLandmarkByOrder(id: Number): Observable<Landmark | undefined> {
-    return this.http.get<ApiResponse<Landmark>>(`${this.url}/getLandmarkByOrder?order=${id}`).pipe(
+    return this.http.post<ApiResponse<Landmark>>(`${this.url}/getLandmarkByOrder`, {order:id}).pipe(
       map(response => {
         if (response.success) {
           return response.data;
