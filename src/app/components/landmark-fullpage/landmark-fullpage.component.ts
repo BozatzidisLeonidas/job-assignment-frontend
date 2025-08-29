@@ -16,13 +16,15 @@ import { RouterModule } from '@angular/router';
 export class LandmarkFullpageComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
   landmarkService: LandmarkService = inject(LandmarkService);
-
+  //MPOROYSA NA EXW CONSTRUCTOR ANTI GIA INJECT 
   landmark = signal<Landmark | null>(null);
   photoUrl = signal<string>('');
   showModal = signal<boolean>(false);
 
   async ngOnInit() {
     const landmarkOrder = Number(this.route.snapshot.params['order']);
+    //snapshot is a static representation of the route at the moment the component was initialized. Pairnw to number
+    //subscribe Since getLandmarkByOrder() returns an observable (an async data stream), we subscribe to it. The subscribe() method allows you to react to the incoming data and handle it when it arrives.
     this.landmarkService.getLandmarkByOrder(landmarkOrder).subscribe({
       next: (landmark) => {
         if (landmark) {

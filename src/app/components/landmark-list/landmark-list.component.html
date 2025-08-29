@@ -1,11 +1,15 @@
 <app-search (searchTerm)="onSearchTermChange($event)"></app-search>
 
 <div class="w-full min-h-screen flex p-4 dark:bg-gray-900">
-    <div *ngIf="(landmarkList$ | async) as landmarks" class="w-full">
+    <div *ngIf="(landmarkList$ | async) as landmarks" class="w-full">  
+        <!--async: subscribes to the observable kai kanei update aytomata to template (landmarkList$ einai to observable) (einai pipe)
+        olo mazi (landmarkList$ | async) epistrefei ena array, oxi observable, poy mporei na mpei sto ngif-->
         <div *ngIf="landmarks.length > 0; else noLandmarks" 
                 class="grid gap-4 w-full h-full mx-auto grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3">
-            <app-landmark-card *ngFor="let landmark of landmarks | sortByOrderNumber" [landmark]="landmark"
+            <app-landmark-card *ngFor="let landmark of landmarks | sortByOrderNumber" [landmark]="landmark" 
                 class="flex flex-col rounded-md shadow-md overflow-hidden">
+            <!-- Kanw pipe usage, dld to sortByOrderNumber, transforms data prin ta dei3ei, tha mporoysa alliws na ta kanw sort sthn vash h na kanw sort sto ts toy arxeioy(des pureRef)
+             to [landmark]="landmark" kanw input binding, to landmark stis [] einai to input property toy card-component to allo landmark einai ayto poy orizw sto for-->
             </app-landmark-card>
         </div>
     </div>
@@ -16,3 +20,4 @@
         <p class="text-6xl text-gray-500 dark:text-gray-400">No landmarks found.</p>
     </div>
 </ng-template>
+
