@@ -1,6 +1,6 @@
 # Front end Application
 
-Welcome to the Angular application setup guide! Follow the instructions below to set up and run the application locally.
+Welcome to the Angular application setup guide! Follow the instructions below to set up and run the application locally. This is a frontend web application built with Angular, designed as part of a hiring assignment. The app displays a list of landmarks in Dubai and allows users to explore them in detail.
 
 ## Prerequisites
 
